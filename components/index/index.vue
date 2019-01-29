@@ -20,7 +20,7 @@
 		data(){
 			return{
 				imgs,
-				errorMsg:"",
+				errorMsg:"1",
 				rechooseActive:false,
 				sureActive:false,
 				createClass:"",
