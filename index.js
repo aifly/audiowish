@@ -50,12 +50,12 @@ new Vue({
 		<audio src='./assets/music/water.mp3' ref='water'></audio>
 		<audio src='./assets/music/photo.mp3' ref='photo'></audio>
 		<audio src='./assets/music/bg.mp3' ref='audio'></audio>
-		<audio src='./assets/music/tu.mp3' ref='tu' loop></audio>
 		<Main :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  v-if='show && !isShare'  :obserable='obserable'></Main>
 		<Upload :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Upload>
 		<Loading v-if='!show' :width='width' :obserable='obserable'></Loading>
 		*/
 		template: `<div>
+		<audio src='./assets/music/bg.mp3' ref='bg' loop></audio>
 		<Loading :width='width' :obserable='obserable'></Loading>
 		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Index>
 	</div>`,
@@ -92,13 +92,17 @@ new Vue({
 	},
 	components: {
 		Index,
-		Loading
+		Loading,
 	},
 	mounted() {
 
 		var s = this;
 		var src = (zmitiUtil.getQueryString('src'));
 		var num = (zmitiUtil.getQueryString('num'));
+
+		obserable.on('playVoice',()=>{
+			this.$refs['bg'].play();
+		})
 
 		this.isShare = src && !isNaN(num);
 
@@ -123,6 +127,11 @@ new Vue({
 			obserable.trigger({
 				type:'hideloading'
 			})
+			setTimeout(() => {
+				obserable.trigger({
+					type: 'initIndex'
+				})
+			}, 1000);
 			s.show = true;
 			s.loaded = true;
 			
@@ -141,7 +150,7 @@ new Vue({
 
 		});
 		this.updatePv();
-		//zmitiUtil.getOauthurl(obserable);
+		zmitiUtil.getOauthurl(obserable);
 		//zmitiUtil.wxConfig(document.title, window.desc);
 		
 		return;

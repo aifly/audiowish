@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-var port = 4058;
+var port = 4059;
 var config = {
     entry: {
         'index': "./index.js",
@@ -8,7 +8,7 @@ var config = {
     },
     output: {
         //publicPath: './static/js',
-        path: './assets/js',
+        path: '/assets/js',
         filename: "[name].js",
         chunkFilename: "[name].js"
     },
